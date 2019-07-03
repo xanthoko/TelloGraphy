@@ -1,5 +1,5 @@
 import os
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 PORT_NUMBER = 8080
 
@@ -22,7 +22,7 @@ class myHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
         # Send the html message
-        self.wfile.write(self.html_tempalte)
+        self.wfile.write(self.html_tempalte.encode())
 
 
 try:
