@@ -1,21 +1,31 @@
-Welcome to <b>TelloGraphy</b>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3">
-            <img src='static/images/arrow_left.png'>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    Welcome to <b>TelloGraphy</b>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <img src='static/images/arrow_left.png' onclick="draw('left')">
+            </div>
+            <div class="col-md-3">
+                <img src='static/images/arrow_right.png' onclick="draw('right')">
+            </div>
+            <div class="col-md-3">
+                <img src='static/images/arrow_down.png' onclick="draw('down')">
+            </div>
+            <div class="col-md-3">
+                <img src='static/images/arrow_up.png' onclick="draw('up')">
+            </div>
         </div>
-        <div class="col-md-3">
-            <img src='static/images/arrow_right.png'>
-        </div>
-        <div class="col-md-3">
-            <img src='static/images/arrow_down.png'>
-        </div>
-        <div class="col-md-3">
-            <img src='static/images/arrow_up.png'>
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="myCanvas" width="1000" height="1000"></canvas>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-        </div>
-    </div>
-</div>
+
+    <script src="/static/js/draw.js"></script>
+</body>
