@@ -8,11 +8,11 @@ class Drawer {
         var new_x = 0;
         var new_y = 0;
         switch (direction) {
-            case "up":
+            case "forward":
                 new_x = 0;
                 new_y = -100;
                 break;
-            case "down":
+            case "back":
                 new_x = 0;
                 new_y = 100;
                 break;
@@ -26,48 +26,24 @@ class Drawer {
                 break;
         }
 
+        new_x = this.x + new_x;
+        new_y = this.y + new_y;
+
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
 
-        var midx = canvas.width / 2;
-        var midy = canvas.height / 2;
         ctx.beginPath();
-        ctx.moveTo(midx, midy);
-        ctx.lineTo(midx + new_x, midy + new_y);
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(new_x, new_y);
         ctx.stroke();
+
+        this.x = new_x;
+        this.y = new_y;
     }
 }
 
-function draw(direction) {
-    var new_x = 0;
-    var new_y = 0;
-    switch (direction) {
-        case "up":
-            new_x = 0;
-            new_y = -100;
-            break;
-        case "down":
-            new_x = 0;
-            new_y = 100;
-            break;
-        case "left":
-            new_x = -100;
-            new_y = 0;
-            break;
-        case "right":
-            new_x = 100;
-            new_y = 0;
-            break;
-    }
 
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
 
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-
-    var midx = canvas.width / 2;
-    var midy = canvas.height / 2;
-    ctx.beginPath();
-    ctx.moveTo(midx, midy);
-    ctx.lineTo(midx + new_x, midy + new_y);
-    ctx.stroke();
-}
+const drawer = new Drawer(canvas.width / 2, canvas.height / 2);

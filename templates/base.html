@@ -4,27 +4,91 @@
 </head>
 
 <body>
-    Welcome to <b>TelloGraphy</b>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <img src='static/images/arrow_left.png' onclick="draw('left')">
-            </div>
-            <div class="col-md-3">
-                <img src='static/images/arrow_right.png' onclick="draw('right')">
-            </div>
-            <div class="col-md-3">
-                <img src='static/images/arrow_down.png' onclick="draw('down')">
-            </div>
-            <div class="col-md-3">
-                <img src='static/images/arrow_up.png' onclick="draw('up')">
+        <div class="row" style="margin: 5vh;">
+            <div class="col-md-12">
+                <h3>
+                    Welcome to <b>TelloGraphy</b>
+                </h3>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <img src='static/images/arrow_forward.png' onclick="drawer.draw('forward')">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src='static/images/arrow_left.png' onclick="drawer.draw('left')">
+                            </td>
+                            <td>
+                                <img src='static/images/arrow_back.png' onclick="drawer.draw('back')">
+                            </td>
+                            <td>
+                                <img src='static/images/arrow_right.png' onclick="drawer.draw('right')">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                GO UP
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ROTATE LEFT
+                            </td>
+                            <td>
+                                GO DOWN
+                            </td>
+                            <td>
+                                ROTATE RIGHT
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-md btn-info">
+                            Clear
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-md btn-primary" style="margin-left: 5vw;">
+                            Execute
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <canvas id="myCanvas" width="1000" height="1000"></canvas>
             </div>
         </div>
+
     </div>
 
     <script src="/static/js/draw.js"></script>
