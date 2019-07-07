@@ -5,7 +5,7 @@
 
 <body>
     <div class="container-fluid">
-        <div class="row" style="margin: 5vh;">
+        <div class="row">
             <div class="col-md-12">
                 <h3>
                     Welcome to <b>TelloGraphy</b>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
@@ -38,8 +38,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="col-md-6">
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
@@ -64,31 +62,18 @@
                         </tr>
                     </tbody>
                 </table>
+                <button type="button" class="btn btn-secondary" onclick="drawer.clear()">
+                    Clear
+                </button>
+                <button type="button" class="btn btn-success">
+                    Execute
+                </button>
+            </div>
+            <div class="col-md-8">
+                <canvas id="myCanvas" width="700" height="700"
+                    style="border: 1px solid black; margin-left: 2vw;"></canvas>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-md btn-info">
-                            Clear
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-md btn-primary" style="margin-left: 5vw;">
-                            Execute
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <canvas id="myCanvas" width="1000" height="1000"></canvas>
-            </div>
-        </div>
-
     </div>
 
     <script src="/static/js/draw.js"></script>
