@@ -20,20 +20,20 @@
                             <td>
                             </td>
                             <td>
-                                <img src='static/images/arrow_forward.png' onclick="drawer.draw('forward')">
+                                <img src='static/images/arrow_forward.png' onclick="drawer.move('forward')">
                             </td>
                             <td>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <img src='static/images/arrow_left.png' onclick="drawer.draw('left')">
+                                <img src='static/images/arrow_left.png' onclick="drawer.move('left')">
                             </td>
                             <td>
-                                <img src='static/images/arrow_back.png' onclick="drawer.draw('back')">
+                                <img src='static/images/arrow_back.png' onclick="drawer.move('back')">
                             </td>
                             <td>
-                                <img src='static/images/arrow_right.png' onclick="drawer.draw('right')">
+                                <img src='static/images/arrow_right.png' onclick="drawer.move('right')">
                             </td>
                         </tr>
                     </tbody>
@@ -64,6 +64,9 @@
                 </table>
                 <button type="button" class="btn btn-secondary" onclick="drawer.clear()">
                     Clear
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="drawer.undo()">
+                    Undo
                 </button>
                 <button type="button" class="btn btn-success">
                     Execute
