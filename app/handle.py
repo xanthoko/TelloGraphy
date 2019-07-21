@@ -18,7 +18,6 @@ class Handler:
         command_tuples: A list of cmdPoint tuples
         battery: The battery level of tello
         status: The status of tello
-        initialized: A boolean that indicates if tello is initialized
     """
 
     def __init__(self):
@@ -27,8 +26,6 @@ class Handler:
 
         self.command_sent = ()  # tuple with the command sent and its timestamp
         self.command_tuples = []  # list of cmdPoints
-
-        self.initialized = False
 
     def set_command_sent(self, command):
         self.command_sent = (command, time() - self.start_stamp)
@@ -58,9 +55,6 @@ class Handler:
         except IndexError:
             # IndexError: command_sent is an empty tuple
             return False
-
-        # update tello's status
-        self.update_status(self.command_sent[0])
 
         return True
 

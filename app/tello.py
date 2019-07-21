@@ -59,7 +59,7 @@ class Tello:
             print('[ERROR] Another command awaits reponse, please wait')
             return False
 
-        if command != 'command' and not self.handler.initialized:
+        if command != 'command' and not self.initialized:
             # if tello is not initialized it cannot accept any commands
             print('[ERROR]: Tello must be initialized. Run "command" first.')
             return False
