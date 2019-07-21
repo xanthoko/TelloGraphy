@@ -10,6 +10,7 @@ class Drawer {
         // position intialized
         this.x = this.canvas.width / 2;
         this.y = this.canvas.height / 2;
+        this.angle = 0;
 
         // the steps of the tello movement
         this.steps = [];
@@ -28,6 +29,10 @@ class Drawer {
 
         // draw the updated path
         this.draw_path();
+    }
+
+    rotate(direction) {
+        console.log('here')
     }
 
     get_destination(direction) {
