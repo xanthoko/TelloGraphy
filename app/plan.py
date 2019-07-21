@@ -1,5 +1,9 @@
 import os
+import cgi
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+from tello import Tello
 
 PORT_NUMBER = 8080
 
@@ -16,45 +20,76 @@ HEADER_MAP = {
 
 
 class myHandler(BaseHTTPRequestHandler):
-
     def do_GET(self):
         """Handles the GET requests."""
-        resource = self.path
         # read the html to be displayed
         with open(BASE_DIR + '/templates/base.html') as f:
             self.html_tempalte = f.read()
 
-        content, content_type = self.handle_request(self.path)
+        content, content_type = handle_request(self.path)
 
         self.send_response(200)
         self.send_header('Content-type', content_type)
         self.end_headers()
         self.wfile.write(content)
 
-    def handle_request(self, path):
-        """Returns the content type and the content according to the given path."""
-        # extention is blank if no resource is requested
-        extention = self.path.split('/')[-1].split('.')[-1]
+    def do_POST(self):
+        ctype, pdict = cgi.parse_header(self.headers['content-type'])
 
-        if extention in ["jpg", "png"]:
-            # read images as binary files
-            with open(BASE_DIR + path, 'rb') as f:
-                content = f.read()
-        elif extention in ['css', 'js']:
-            # encode strings
-            with open(BASE_DIR + path, 'r') as f:
-                content = f.read().encode('utf-8')
+        # convert pdict[boundary] to bytes
+        pdict['boundary'] = pdict['boundary'].encode("utf-8")
+
+        if ctype == 'multipart/form-data':
+            fields = cgi.parse_multipart(self.rfile, pdict)
         else:
-            with open(BASE_DIR + '/templates/base.html') as f:
-                content = f.read().encode('utf-8')
+            # only form-data is accepted
+            fields = {}
 
-        try:
-            # content type according to the extention
-            content_type = HEADER_MAP[extention]
-        except KeyError:
-            content_type = 'text/plain'
+        steps = parse_form_data(fields)
 
-        return content, content_type
+        tello = Tello()
+        tello.execute(steps)
+
+        # Send the "message" field back as the response.
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain; charset=utf-8')
+        self.end_headers()
+        self.wfile.write(b'')
+
+
+def handle_request(path):
+    """Returns the content type and the content according to the given path."""
+    # extention is blank if no resource is requested
+    extention = path.split('/')[-1].split('.')[-1]
+
+    if extention in ["jpg", "png"]:
+        # read images as binary files
+        with open(BASE_DIR + path, 'rb') as f:
+            content = f.read()
+    elif extention in ['css', 'js']:
+        # encode strings
+        with open(BASE_DIR + path, 'r') as f:
+            content = f.read().encode('utf-8')
+    else:
+        with open(BASE_DIR + '/templates/base.html') as f:
+            content = f.read().encode('utf-8')
+
+    try:
+        # content type according to the extention
+        content_type = HEADER_MAP[extention]
+    except KeyError:
+        content_type = 'text/plain'
+
+    return content, content_type
+
+
+def parse_form_data(data):
+    """Decomposes the given form-data and returns a steps list."""
+    # data = {'steps': [b'right,left']}
+    steps_list = data['steps']
+    steps_bytes = steps_list[0]
+    steps = steps_bytes.decode('utf-8').split(',')
+    return steps
 
 
 def run():
@@ -62,9 +97,8 @@ def run():
         # Create a web server and define the handler to manage the
         # incoming request
         server = HTTPServer(('', PORT_NUMBER), myHandler)
-        print('Started httpserver on port ', PORT_NUMBER)
 
-        # Wait forever for incoming htto requests
+        # Wait forever for incoming http requests
         server.serve_forever()
 
     except KeyboardInterrupt:

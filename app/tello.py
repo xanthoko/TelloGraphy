@@ -1,4 +1,3 @@
-import os
 import socket
 import threading
 from time import time, sleep
@@ -34,10 +33,7 @@ class Tello:
         # indicates whether a command was executed successfully
         self.command_success = False
 
-        # tello status
-        self.status = 'Not connected'
-
-        self.frame = None
+        self.initialized = self.initialize()
 
     def __del__(self):
         """On delete, closes the running sockets."""
@@ -135,3 +131,16 @@ class Tello:
             bool: True if "command" was sent successfully, False if "command" failed
         """
         return self.send_command('command')
+
+    def execute(self, steps):
+        if self.initialized:
+            self.send_command('takeoff')
+
+            temp_dist = 20
+            for step in steps:
+                command = '{} {}'.format(step, temp_dist)
+                self.send_command(command)
+
+            self.send_command('land')
+        else:
+            print('[ERROR] Initialization failed.')

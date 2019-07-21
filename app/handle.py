@@ -2,6 +2,8 @@ from time import time
 from datetime import datetime
 from collections import namedtuple
 
+from utils import reverse_cmd_map
+
 cmdPoint = namedtuple('cmdPoint', ['command', 'sTime', 'rTime'])
 
 
@@ -121,17 +123,6 @@ class Handler:
         """
         # path_cmd is a list of cmdPoints
         path_cmd = self.get_pathing_commands()
-
-        reverse_cmd_map = {
-            'forward': 'back',
-            'back': 'forward',
-            'left': 'right',
-            'right': 'left',
-            'up': 'down',
-            'down': 'up',
-            'cw': 'ccw',
-            'ccw': 'cw'
-        }
 
         reversed_path_cmd = []
         for cmd in reversed(path_cmd):
