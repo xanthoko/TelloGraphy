@@ -1,4 +1,5 @@
 <!-- Icon made by https://www.freepik.com/ from www.flaticon.com -->
+<!-- Icon made by Dave Gandy from www.flaticon.com -->
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +11,7 @@
 
 <body>
     <div class="container-fluid">
+        <!-- title -->
         <div class="row">
             <div class="col-md-12">
                 <h3>
@@ -17,63 +19,76 @@
                 </h3>
             </div>
         </div>
+        <!-- content -->
         <div class="row">
             <div class="col-md-4">
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <img src='static/images/arrow_forward.png' onclick="drawer.move('forward')">
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src='static/images/arrow_left.png' onclick="drawer.move('left')">
-                            </td>
-                            <td>
-                                <img src='static/images/arrow_back.png' onclick="drawer.move('back')">
-                            </td>
-                            <td>
-                                <img src='static/images/arrow_right.png' onclick="drawer.move('right')">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                                GO UP
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ROTATE LEFT
-                            </td>
-                            <td>
-                                GO DOWN
-                            </td>
-                            <td>
-                                ROTATE RIGHT
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-md-9">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <img src='static/images/arrow_forward.png' onclick="drawer.move('forward')">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src='static/images/arrow_left.png' onclick="drawer.move('left')">
+                                    </td>
+                                    <td>
+                                        <img src='static/images/arrow_back.png' onclick="drawer.move('back')">
+                                    </td>
+                                    <td>
+                                        <img src='static/images/arrow_right.png' onclick="drawer.move('right')">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <img src='static/images/arrow_up.png' onclick="drawer.move('up')">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src='static/images/rotate_ccw.png' onclick="drawer.move('ccw')">
+                                    </td>
+                                    <td>
+                                        <img src='static/images/arrow_down.png' onclick="drawer.move('down')">
+                                    </td>
+                                    <td>
+                                        <img src='static/images/rotate_cw.png' onclick="drawer.move('cw')">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
                 <button type="button" class="btn btn-secondary" onclick="drawer.clear()">
                     Clear
                 </button>
                 <button type="button" class="btn btn-secondary" onclick="drawer.undo()">
                     Undo
                 </button>
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn btn-success" onclick="drawer.execute()">
                     Execute
                 </button>
             </div>

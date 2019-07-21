@@ -101,9 +101,8 @@ class Drawer {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // clear the steps array
         this.steps = [];
-        // reset the starting coordinates
-        this.x = this.start_x;
-        this.y = this.start_y;
+        // draw the initial pointer
+        this.draw_path();
     }
 
     undo() {
@@ -113,6 +112,17 @@ class Drawer {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // draw the updated path
         this.draw_path()
+    }
+
+    execute() {
+        var request = new XMLHttpRequest();
+        // POST to httpbin which returns the POST data as JSON
+        request.open('POST', '');
+
+        var formData = new FormData();
+        formData.append('steps', this.steps);
+
+        request.send(formData);
     }
 }
 
