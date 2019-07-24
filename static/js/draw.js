@@ -3,6 +3,11 @@ class Drawer {
         this.canvas = document.getElementById("myCanvas");
         this.ctx = this.canvas.getContext("2d");
 
+        this.slider1 = document.getElementById("myRange1");
+        this.slider2 = document.getElementById("myRange2");
+        this.out1 = document.getElementById("out1");
+        this.out2 = document.getElementById("out2");
+
         // starting point is set to the middle of the canvas
         this.start_x = this.canvas.width / 2;
         this.start_y = this.canvas.height / 2;
@@ -25,9 +30,8 @@ class Drawer {
 
     move(direction) {
         // update the steps array with the given direction
-        var full_move = direction + ' ' + this.distance;
+        var full_move = direction + ' ' + this.slider1.value;
         this.steps.push(full_move);
-        console.log(this.steps);
 
         // clear the canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -47,31 +51,27 @@ class Drawer {
 
         var tiles = step.split(' ');
         var direction = tiles[0];
-        var distance = tiles[1];
-
-        // converting tello distance to canvas distance
-        // min distance in tello is 20 but in canvas 50
-        var canv_distance = distance * 2.5;
+        var distance = parseInt(tiles[1]);
 
         // according to the given direction set the change of the position
         switch (direction) {
             case "forward":
-                new_y = -canv_distance;
+                new_y = -distance;
                 break;
             case "back":
-                new_y = canv_distance;
+                new_y = distance;
                 break;
             case "left":
-                new_x = -canv_distance;
+                new_x = -distance;
                 break;
             case "right":
-                new_x = canv_distance;
+                new_x = distance;
                 break;
             case "up":
-                new_z = canv_distance;
+                new_z = distance;
                 break;
             case "down":
-                new_z = -canv_distance;
+                new_z = -distance;
                 break;
         }
 
@@ -125,6 +125,12 @@ class Drawer {
         this.steps = [];
         // draw the initial pointer
         this.draw_path();
+
+        this.slider1.value = 20;
+        this.out1.innerHTML = 20;
+
+        this.slider2.value = 20;
+        this.out2.innerHTML = 20;
     }
 
     undo() {

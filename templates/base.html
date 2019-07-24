@@ -5,9 +5,8 @@
 <html>
 
 <head>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/slider.css">
 </head>
 
 <body>
@@ -51,6 +50,11 @@
                         </table>
                     </div>
                     <div class="col-md-3">
+                        <div class="slidecontainer1">
+                            <input type="range" min="20" max="500" value="20" class="slider" id="myRange1">
+                        </div>
+                        <div id='out1'>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -81,6 +85,11 @@
                         </table>
                     </div>
                     <div class="col-md-3">
+                        <div class="slidecontainer2">
+                            <input type="range" min="20" max="500" value="20" class="slider" id="myRange2">
+                        </div>
+                        <div id='out2'>
+                        </div>
                     </div>
                 </div>
                 <button type="button" class="btn btn-secondary" onclick="drawer.clear()">
@@ -101,6 +110,25 @@
     </div>
 
     <script src="/static/js/draw.js"></script>
+    <script>
+        var slider1 = document.getElementById("myRange1");
+        var output1 = document.getElementById("out1");
+        output1.innerHTML = slider1.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider1.oninput = function () {
+            output1.innerHTML = this.value;
+        }
+
+        var slider2 = document.getElementById("myRange2");
+        var output2 = document.getElementById("out2");
+        output2.innerHTML = slider1.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider2.oninput = function () {
+            output2.innerHTML = this.value;
+        }
+    </script>
 </body>
 
 </html>
