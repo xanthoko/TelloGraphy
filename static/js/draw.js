@@ -10,7 +10,11 @@ class Drawer {
         // position intialized
         this.x = this.canvas.width / 2;
         this.y = this.canvas.height / 2;
+        this.z = 0;
         this.angle = 0;
+
+        this.distance = 20;
+        this.rotation = 5;
 
         // the steps of the tello movement
         this.steps = [];
@@ -21,7 +25,8 @@ class Drawer {
 
     move(direction) {
         // update the steps array with the given direction
-        this.steps.push(direction);
+        var full_move = direction + ' ' + this.distance;
+        this.steps.push(full_move);
         console.log(this.steps);
 
         // clear the canvas
@@ -32,38 +37,50 @@ class Drawer {
     }
 
     rotate(direction) {
-        console.log('here')
+        console.log('here');
     }
 
-    get_destination(direction) {
+    get_destination(step) {
         var new_x = 0;
         var new_y = 0;
+        var new_z = 0;
+
+        var tiles = step.split(' ');
+        var direction = tiles[0];
+        var distance = tiles[1];
+
+        // converting tello distance to canvas distance
+        // min distance in tello is 20 but in canvas 50
+        var canv_distance = distance * 2.5;
 
         // according to the given direction set the change of the position
         switch (direction) {
             case "forward":
-                new_x = 0;
-                new_y = -50;
+                new_y = -canv_distance;
                 break;
             case "back":
-                new_x = 0;
-                new_y = 50;
+                new_y = canv_distance;
                 break;
             case "left":
-                new_x = -50;
-                new_y = 0;
+                new_x = -canv_distance;
                 break;
             case "right":
-                new_x = 50;
-                new_y = 0;
+                new_x = canv_distance;
+                break;
+            case "up":
+                new_z = canv_distance;
+                break;
+            case "down":
+                new_z = -canv_distance;
                 break;
         }
 
         // updated position
         new_x = this.x + new_x;
         new_y = this.y + new_y;
+        new_z = this.z + new_z;
 
-        return [new_x, new_y]
+        return [new_x, new_y, new_z]
     }
 
     draw_path() {

@@ -33,7 +33,8 @@ class Tello:
         # indicates whether a command was executed successfully
         self.command_success = False
 
-        self.initialized = self.initialize()
+        # self.initialized = self.initialize()
+        self.initialized = True
 
     def __del__(self):
         """On delete, closes the running sockets."""
@@ -133,14 +134,22 @@ class Tello:
         return self.send_command('command')
 
     def execute(self, steps):
+        """Executes the steps received from frontend after taking off and in the end
+        executes the 'land' command.
+
+        Args:
+            steps (list): Steps that user drew in canvas
+        """
         if self.initialized:
-            self.send_command('takeoff')
+            # self.send_command('takeoff')
 
-            temp_dist = 20
-            for step in steps:
-                command = '{} {}'.format(step, temp_dist)
-                self.send_command(command)
+            # calculate the 'go' commmands that correspond to each step
+            go_cmds = self.handler.cacl_go_cmd(steps)
+            print(go_cmds)
 
-            self.send_command('land')
+            # for go_cmd in go_cmds:
+            #     self.send_command(go_cmd)
+
+            # self.send_command('land')
         else:
             print('[ERROR] Initialization failed.')

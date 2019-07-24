@@ -144,3 +144,46 @@ class Handler:
             for cmd in self.command_tuples:
                 f.write('\n{cmd.command}\t {cmd.sTime} {cmd.rTime}'.format(
                     cmd=cmd))
+
+    def cacl_go_cmd(self, steps):
+        """Converts movement commands to go commands.
+
+        Args:
+            steps (list): List of movement commands
+        Returns:
+            list: The go commands
+        """
+        go_cmds = []
+        speed = 10
+
+        for step in steps:
+            x = 0
+            y = 0
+            z = 0
+
+            try:
+                direction, distance = step.split(' ')
+                distance = int(distance)
+            except ValueError:
+                # ValueError: step invalid format or distance is not a valid integer
+                continue
+
+            if direction == 'forward':
+                y += distance
+            elif direction == 'back':
+                y -= distance
+            elif direction == 'left':
+                x -= distance
+            elif direction == 'right':
+                x += distance
+            elif direction == 'up':
+                z += distance
+            elif direction == 'down':
+                z += distance
+            else:
+                print('unknown direction')
+
+            go_cmd = 'go {} {} {} {}'.format(x, y, z, speed)
+            go_cmds.append(go_cmd)
+
+        return go_cmds
