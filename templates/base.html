@@ -92,6 +92,23 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6">
+                        <b>Speed</b>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="slidecontainer3">
+                            <input type="range" min="10" max="100" value="10" class="slider" id="myRange3">
+                        </div>
+                        <div id='out3'>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
                 <button type="button" class="btn btn-secondary" onclick="drawer.clear()">
                     Clear
                 </button>
@@ -122,11 +139,20 @@
 
         var slider2 = document.getElementById("myRange2");
         var output2 = document.getElementById("out2");
-        output2.innerHTML = slider1.value; // Display the default slider value
+        output2.innerHTML = slider2.value; // Display the default slider value
 
         // Update the current slider value (each time you drag the slider handle)
         slider2.oninput = function () {
             output2.innerHTML = this.value;
+        }
+
+        var slider3 = document.getElementById("myRange3");
+        var output3 = document.getElementById("out3");
+        output3.innerHTML = slider3.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider3.oninput = function () {
+            output3.innerHTML = this.value;
         }
     </script>
 </body>
