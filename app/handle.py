@@ -154,7 +154,6 @@ class Handler:
             list: The go commands
         """
         go_cmds = []
-        speed = 10
 
         for step in steps:
             x = 0
@@ -162,16 +161,15 @@ class Handler:
             z = 0
 
             try:
-                direction, distance = step.split(' ')
+                direction, distance, speed = step.split(' ')
                 distance = int(distance)
+                speed = int(speed)
             except ValueError:
                 # ValueError: step invalid format or distance is not a valid integer
                 continue
 
             if direction == 'forward':
                 y += distance
-            elif direction == 'back':
-                y -= distance
             elif direction == 'left':
                 x -= distance
             elif direction == 'right':
@@ -183,7 +181,13 @@ class Handler:
             else:
                 print('unknown direction')
 
-            go_cmd = 'go {} {} {} {}'.format(x, y, z, speed)
+            if direction == 'back':
+                # not sure how the go command works with the backwards movement
+                # testing is needed
+                go_cmd = 'back {}'.format(distance)
+            else:
+                go_cmd = 'go {} {} {} {}'.format(x, y, z, speed)
+
             go_cmds.append(go_cmd)
 
         return go_cmds

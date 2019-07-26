@@ -51,9 +51,9 @@
                     </div>
                     <div class="col-md-3">
                         <div class="slidecontainer1">
-                            <input type="range" min="20" max="500" value="20" class="slider" id="myRange1">
+                            <input type="range" min="20" max="500" value="20" class="slider" id="distRange">
                         </div>
-                        <div id='out1'>
+                        <div id='distT'>
                         </div>
                     </div>
                 </div>
@@ -86,24 +86,24 @@
                     </div>
                     <div class="col-md-3">
                         <div class="slidecontainer2">
-                            <input type="range" min="20" max="500" value="20" class="slider" id="myRange2">
+                            <input type="range" min="1" max="360" value="10" class="slider" id="angleRange">
                         </div>
-                        <div id='out2'>
+                        <div id='angleT'>
                         </div>
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-7">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <b>Speed</b>
                     </div>
                     <div class="col-md-3">
                         <div class="slidecontainer3">
-                            <input type="range" min="10" max="100" value="10" class="slider" id="myRange3">
+                            <input type="range" min="10" max="100" value="10" class="slider" id="speedRange">
                         </div>
-                        <div id='out3'>
+                        <div id='speedT'>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                 </button>
             </div>
             <div class="col-md-8">
-                <canvas id="myCanvas" width="700" height="700"
+                <canvas id="myCanvas" width="900" height="900"
                     style="border: 1px solid black; margin-left: 2vw;"></canvas>
             </div>
         </div>
@@ -128,8 +128,8 @@
 
     <script src="/static/js/draw.js"></script>
     <script>
-        var slider1 = document.getElementById("myRange1");
-        var output1 = document.getElementById("out1");
+        var slider1 = document.getElementById("distRange");
+        var output1 = document.getElementById("distT");
         output1.innerHTML = slider1.value; // Display the default slider value
 
         // Update the current slider value (each time you drag the slider handle)
@@ -137,8 +137,8 @@
             output1.innerHTML = this.value;
         }
 
-        var slider2 = document.getElementById("myRange2");
-        var output2 = document.getElementById("out2");
+        var slider2 = document.getElementById("angleRange");
+        var output2 = document.getElementById("angleT");
         output2.innerHTML = slider2.value; // Display the default slider value
 
         // Update the current slider value (each time you drag the slider handle)
@@ -146,8 +146,8 @@
             output2.innerHTML = this.value;
         }
 
-        var slider3 = document.getElementById("myRange3");
-        var output3 = document.getElementById("out3");
+        var slider3 = document.getElementById("speedRange");
+        var output3 = document.getElementById("speedT");
         output3.innerHTML = slider3.value; // Display the default slider value
 
         // Update the current slider value (each time you drag the slider handle)

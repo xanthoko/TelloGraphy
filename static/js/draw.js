@@ -3,10 +3,12 @@ class Drawer {
         this.canvas = document.getElementById("myCanvas");
         this.ctx = this.canvas.getContext("2d");
 
-        this.slider1 = document.getElementById("myRange1");
-        this.slider2 = document.getElementById("myRange2");
-        this.out1 = document.getElementById("out1");
-        this.out2 = document.getElementById("out2");
+        this.dist_slider = document.getElementById("distRange");
+        this.angle_slider = document.getElementById("angleRange");
+        this.speed_slider = document.getElementById("speedRange");
+        this.distT = document.getElementById("distT");
+        this.angleT = document.getElementById("angleT");
+        this.speedT = document.getElementById("speedT");
 
         // starting point is set to the middle of the canvas
         this.start_x = this.canvas.width / 2;
@@ -17,9 +19,10 @@ class Drawer {
         this.y = this.canvas.height / 2;
         this.z = 0;
         this.angle = 0;
+        this.speed = 10;
 
         this.distance = 20;
-        this.rotation = 5;
+        this.rotation = 10;
 
         // the steps of the tello movement
         this.steps = [];
@@ -30,7 +33,10 @@ class Drawer {
 
     move(direction) {
         // update the steps array with the given direction
-        var full_move = direction + ' ' + this.slider1.value;
+        const distnace = this.dist_slider.value;
+        const speed = this.speed_slider.value;
+        // move command format: '{direction} {distance} {speed}'
+        var full_move = direction + ' ' + distnace + ' ' + speed;
         this.steps.push(full_move);
 
         // clear the canvas
@@ -52,6 +58,9 @@ class Drawer {
         var tiles = step.split(' ');
         var direction = tiles[0];
         var distance = parseInt(tiles[1]);
+
+        // scale down the distance drawn in canvas
+        distance = distance * 0.8;
 
         // according to the given direction set the change of the position
         switch (direction) {
@@ -106,7 +115,7 @@ class Drawer {
         this.draw_triangle(this.x, this.y);
     }
 
-    draw_triangle(dst_x, dst_y, angle = 0) {
+    draw_triangle(dst_x, dst_y) {
         this.ctx.beginPath();
         // width: 17, height:7
         this.ctx.moveTo(dst_x - 8, dst_y);
@@ -126,11 +135,14 @@ class Drawer {
         // draw the initial pointer
         this.draw_path();
 
-        this.slider1.value = 20;
-        this.out1.innerHTML = 20;
+        this.dist_slider.value = 20;
+        this.distT.innerHTML = 20;
 
-        this.slider2.value = 20;
-        this.out2.innerHTML = 20;
+        this.angle_slider.value = 10;
+        this.angleT.innerHTML = 10;
+
+        this.speed_slider.value = 10;
+        this.speedT.innerHTML = 10;
     }
 
     undo() {
