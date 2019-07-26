@@ -169,11 +169,11 @@ class Handler:
                 continue
 
             if direction == 'forward':
-                y += distance
-            elif direction == 'left':
-                x -= distance
-            elif direction == 'right':
                 x += distance
+            elif direction == 'left':
+                y -= distance
+            elif direction == 'right':
+                y += distance
             elif direction == 'up':
                 z += distance
             elif direction == 'down':
