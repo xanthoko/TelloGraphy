@@ -6,7 +6,11 @@ tello.send_command('takeoff')
 
 while True:
     try:
-        x, y, z, *_ = input('Enter x y z: ').split(' ')
+        coords = input('Enter x y z: ')
+        if not coords:
+            break
+
+        x, y, z, *_ = coords.split(' ')
         x = int(x)
         y = int(y)
         z = int(z)
@@ -18,3 +22,5 @@ while True:
         # ValueError: Not enough values given or a given number is not a
         # valid string
         print("Try again")
+
+tello.send_command('land')

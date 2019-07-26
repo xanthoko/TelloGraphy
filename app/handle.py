@@ -170,10 +170,12 @@ class Handler:
 
             if direction == 'forward':
                 x += distance
+            elif direction == 'back':
+                x -= distance
             elif direction == 'left':
-                y -= distance
+                y = distance
             elif direction == 'right':
-                y += distance
+                y -= distance
             elif direction == 'up':
                 z += distance
             elif direction == 'down':
@@ -181,13 +183,7 @@ class Handler:
             else:
                 print('unknown direction')
 
-            if direction == 'back':
-                # not sure how the go command works with the backwards movement
-                # testing is needed
-                go_cmd = 'back {}'.format(distance)
-            else:
-                go_cmd = 'go {} {} {} {}'.format(x, y, z, speed)
-
+            go_cmd = 'go {} {} {} {}'.format(x, y, z, speed)
             go_cmds.append(go_cmd)
 
         return go_cmds
