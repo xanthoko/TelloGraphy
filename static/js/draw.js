@@ -3,21 +3,26 @@ class Drawer {
         this.canvas = document.getElementById("myCanvas");
         this.ctx = this.canvas.getContext("2d");
 
-        this.dist_slider = document.getElementById("distRange");
-        this.angle_slider = document.getElementById("angleRange");
-        this.speed_slider = document.getElementById("speedRange");
+        this.altCanvas = document.getElementById("altCanvas");
+        this.altCtx = this.altCanvas.getContext("2d");
+        this.altCtx.lineWidth = 2;
+
+        this.distSlider = document.getElementById("distRange");
+        this.angleSlider = document.getElementById("angleRange");
+        this.speedSlider = document.getElementById("speedRange");
         this.distT = document.getElementById("distT");
         this.angleT = document.getElementById("angleT");
         this.speedT = document.getElementById("speedT");
 
         // starting point is set to the middle of the canvas
-        this.start_x = this.canvas.width / 2;
-        this.start_y = this.canvas.height / 2;
+        this.startX = this.canvas.width / 2;
+        this.startY = this.canvas.height / 2;
+        this.startZ = this.altCanvas.height / 2;
 
         // position intialized
         this.x = this.canvas.width / 2;
         this.y = this.canvas.height / 2;
-        this.z = 0;
+        this.z = this.altCanvas.height / 2;
         this.angle = 0;
         this.speed = 10;
 
@@ -28,32 +33,33 @@ class Drawer {
         this.steps = [];
 
         // draw initial tringle
-        this.draw_triangle(this.start_x, this.start_y);
+        this.drawTriangle(this.startX, this.startY);
     }
 
     move(direction) {
         // update the steps array with the given direction
-        const distnace = this.dist_slider.value;
-        const speed = this.speed_slider.value;
+        const distnace = this.distSlider.value;
+        const speed = this.speedSlider.value;
         // move command format: '{direction} {distance} {speed}'
-        var full_move = direction + ' ' + distnace + ' ' + speed;
-        this.steps.push(full_move);
+        var fullMove = direction + ' ' + distnace + ' ' + speed;
+        this.steps.push(fullMove);
 
         // clear the canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.altCtx.clearRect(0, 0, this.altCanvas.width, this.altCanvas.height);
 
         // draw the updated path
-        this.draw_path();
+        this.drawPath();
     }
 
     rotate(direction) {
         console.log('here');
     }
 
-    get_destination(step) {
-        var new_x = 0;
-        var new_y = 0;
-        var new_z = 0;
+    getDestination(step) {
+        var newX = 0;
+        var newY = 0;
+        var newZ = 0;
 
         var tiles = step.split(' ');
         var direction = tiles[0];
@@ -61,87 +67,108 @@ class Drawer {
 
         // scale down the distance drawn in canvas
         distance = distance * 0.8;
+        const altitude = distance * 0.3;
 
         // according to the given direction set the change of the position
         switch (direction) {
             case "forward":
-                new_y = -distance;
+                newY = -distance;
                 break;
             case "back":
-                new_y = distance;
+                newY = distance;
                 break;
             case "left":
-                new_x = -distance;
+                newX = -distance;
                 break;
             case "right":
-                new_x = distance;
+                newX = distance;
                 break;
             case "up":
-                new_z = distance;
+                newZ = -altitude;
                 break;
             case "down":
-                new_z = -distance;
+                newZ = +altitude;
                 break;
         }
 
         // updated position
-        new_x = this.x + new_x;
-        new_y = this.y + new_y;
-        new_z = this.z + new_z;
+        newX = this.x + newX;
+        newY = this.y + newY;
+        newZ = this.z + newZ;
 
-        return [new_x, new_y, new_z]
+        return [newX, newY, newZ]
     }
 
-    draw_path() {
+    drawPath() {
         // reset the position to the starting point
-        this.x = this.start_x;
-        this.y = this.start_y;
+        this.x = this.startX;
+        this.y = this.startY;
+        this.z = this.startZ;
 
         this.ctx.beginPath();
-        this.ctx.moveTo(this.start_x, this.start_y);
+        this.ctx.moveTo(this.startX, this.startY);
 
         for (var i = 0; i < this.steps.length; i++) {
             // destination poin after the given direction
-            var dst = this.get_destination(this.steps[i]);
+            var dst = this.getDestination(this.steps[i]);
 
             // update position
             this.x = dst[0];
             this.y = dst[1];
 
+            this.drawAltitude(i, this.z, dst[2]);
+            this.z = dst[2];
+
             this.ctx.lineTo(dst[0], dst[1]);
         }
         this.ctx.stroke();
 
-        this.draw_triangle(this.x, this.y);
+        this.drawTriangle(this.x, this.y);
     }
 
-    draw_triangle(dst_x, dst_y) {
+    drawTriangle(dstX, dstY) {
         this.ctx.beginPath();
-        // width: 17, height:7
-        this.ctx.moveTo(dst_x - 8, dst_y);
-        this.ctx.lineTo(dst_x + 8, dst_y);
-        this.ctx.lineTo(dst_x, dst_y - 6);
-        this.ctx.lineTo(dst_x - 8, dst_y);
+        // width: 16, height:6
+        this.ctx.moveTo(dstX - 8, dstY);
+        this.ctx.lineTo(dstX + 8, dstY);
+        this.ctx.lineTo(dstX, dstY - 6);
+        this.ctx.lineTo(dstX - 8, dstY);
         this.ctx.lineWidth = 2;
 
         this.ctx.stroke();
     }
 
+    drawAltitude(step, altStart, altEnd) {
+        this.altCtx.beginPath();
+        const sLength = 50;
+
+        var startX = step * sLength + 10;
+        var endX = (step + 1) * sLength;
+
+        this.altCtx.moveTo(startX, altStart);
+        this.altCtx.lineTo(endX, altEnd);
+        this.altCtx.stroke();
+    }
+
     clear() {
         // clear the drawn canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.altCtx.clearRect(0, 0, this.altCanvas.width, this.altCanvas.height);
+
         // clear the steps array
         this.steps = [];
-        // draw the initial pointer
-        this.draw_path();
 
-        this.dist_slider.value = 20;
+        // draw the initial pointer
+        this.drawTriangle(this.startX, this.startY);
+
+        // reset the slider values
+        this.distSlider.value = 20;
         this.distT.innerHTML = 20;
 
-        this.angle_slider.value = 10;
+        this.angleSlider.value = 10;
         this.angleT.innerHTML = 10;
 
-        this.speed_slider.value = 10;
+        this.speedSlider.value = 10;
         this.speedT.innerHTML = 10;
     }
 
@@ -150,8 +177,10 @@ class Drawer {
         this.steps.splice(-1, 1)
         // clear canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.altCtx.clearRect(0, 0, this.altCanvas.width, this.altCanvas.height);
+
         // draw the updated path
-        this.draw_path()
+        this.drawPath()
     }
 
     execute() {

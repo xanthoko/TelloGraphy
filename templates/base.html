@@ -108,19 +108,24 @@
                     </div>
                 </div>
                 <br>
-
-                <button type="button" class="btn btn-secondary" onclick="drawer.clear()">
-                    Clear
-                </button>
-                <button type="button" class="btn btn-secondary" onclick="drawer.undo()">
-                    Undo
-                </button>
-                <button type="button" class="btn btn-success" onclick="drawer.execute()">
-                    Execute
-                </button>
+                <div class="row">
+                    <button type="button" class="btn btn-secondary" onclick="drawer.clear()" style="margin: 10%;">
+                        Clear
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="drawer.undo()" style="margin: 10%;">
+                        Undo
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="drawer.execute()" style="margin: 10%;">
+                        Execute
+                    </button>
+                </div>
+                <div class="row">
+                    <canvas id="altCanvas" width="600%" height=300px
+                        style="border: 1px solid black; margin-left: 5%;"></canvas>
+                </div>
             </div>
             <div class="col-md-8">
-                <canvas id="myCanvas" width="900" height="900"
+                <canvas id="myCanvas" width="900px" height="900px"
                     style="border: 1px solid black; margin-left: 2vw;"></canvas>
             </div>
         </div>
