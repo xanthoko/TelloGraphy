@@ -22,10 +22,6 @@ HEADER_MAP = {
 class myHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         """Handles the GET requests."""
-        # read the html to be displayed
-        with open(BASE_DIR + '/templates/base.html') as f:
-            self.html_tempalte = f.read()
-
         content, content_type = handle_request(self.path)
 
         self.send_response(200)
