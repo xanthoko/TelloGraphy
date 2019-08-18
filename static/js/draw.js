@@ -2,10 +2,14 @@ class Drawer {
     constructor(x, y) {
         this.canvas = document.getElementById("myCanvas");
         this.ctx = this.canvas.getContext("2d");
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
 
         this.altCanvas = document.getElementById("altCanvas");
         this.altCtx = this.altCanvas.getContext("2d");
         this.altCtx.lineWidth = 2;
+        this.altCanvas.width = this.altCanvas.offsetWidth;
+        this.altCanvas.height = this.altCanvas.offsetHeight
 
         this.distSlider = document.getElementById("distRange");
         this.angleSlider = document.getElementById("angleRange");
@@ -17,12 +21,12 @@ class Drawer {
         // starting point is set to the middle of the canvas
         this.startX = this.canvas.width / 2;
         this.startY = this.canvas.height / 2;
-        this.startZ = this.altCanvas.height / 2;
+        this.startZ = this.altCanvas.offsetHeight / 2;
 
         // position intialized
         this.x = this.canvas.width / 2;
         this.y = this.canvas.height / 2;
-        this.z = this.altCanvas.height / 2;
+        this.z = this.altCanvas.offsetHeight / 2;
         this.angle = 0;
         this.speed = 10;
 
@@ -46,7 +50,7 @@ class Drawer {
 
         // clear the canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.altCtx.clearRect(0, 0, this.altCanvas.width, this.altCanvas.height);
+        this.altCtx.clearRect(0, 0, this.altCanvas.offsetWidth, this.altCanvas.offsetHeight);
 
         // draw the updated path
         this.drawPath();
@@ -134,6 +138,7 @@ class Drawer {
         this.ctx.lineTo(dstX, dstY - 6);
         this.ctx.lineTo(dstX - 8, dstY);
         this.ctx.lineWidth = 2;
+        console.log(dstX, dstY)
 
         this.ctx.stroke();
     }
@@ -153,7 +158,7 @@ class Drawer {
     clear() {
         // clear the drawn canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.altCtx.clearRect(0, 0, this.altCanvas.width, this.altCanvas.height);
+        this.altCtx.clearRect(0, 0, this.altCanvas.offsetWidth, this.altCanvas.offsetHeight);
 
         // clear the steps array
         this.steps = [];
@@ -177,7 +182,7 @@ class Drawer {
         this.steps.splice(-1, 1)
         // clear canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.altCtx.clearRect(0, 0, this.altCanvas.width, this.altCanvas.height);
+        this.altCtx.clearRect(0, 0, this.altCanvas.offsetWidth, this.altCanvas.offsetHeight);
 
         // draw the updated path
         this.drawPath()
