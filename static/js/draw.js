@@ -191,7 +191,7 @@ class Drawer {
     execute() {
         var request = new XMLHttpRequest();
         // POST to httpbin which returns the POST data as JSON
-        request.open('POST', '');
+        request.open('POST', 'http://localhost:8080/');
 
         var formData = new FormData();
         formData.append('steps', this.steps);

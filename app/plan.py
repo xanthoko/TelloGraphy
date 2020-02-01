@@ -34,6 +34,7 @@ class myHandler(BaseHTTPRequestHandler):
 
         # convert pdict[boundary] to bytes
         pdict['boundary'] = pdict['boundary'].encode("utf-8")
+        pdict['CONTENT-LENGTH'] = 10000
 
         if ctype == 'multipart/form-data':
             fields = cgi.parse_multipart(self.rfile, pdict)
@@ -44,10 +45,14 @@ class myHandler(BaseHTTPRequestHandler):
         steps = parse_form_data(fields)
 
         tello = Tello()
-        tello.execute(steps)
+        if tello.can_fly:
+            tello.execute(steps)
+            response_code = 200
+        else:
+            response_code = 400
 
         # Send the "message" field back as the response.
-        self.send_response(200)
+        self.send_response(response_code)
         self.send_header('Content-type', 'text/plain; charset=utf-8')
         self.end_headers()
         self.wfile.write(b'')
@@ -81,10 +86,9 @@ def handle_request(path):
 
 def parse_form_data(data):
     """Decomposes the given form-data and returns a steps list."""
-    # data = {'steps': [b'right,left']}
-    steps_list = data['steps']
-    steps_bytes = steps_list[0]
-    steps = steps_bytes.decode('utf-8').split(',')
+    # data = {'steps': ['right,left']}
+    steps_list = data['steps'][0]
+    steps = steps_list.split(',')
     return steps
 
 

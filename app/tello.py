@@ -20,8 +20,7 @@ class Tello:
         self.cmd_socket.bind((self.host, self.cmd_port))
 
         # start the receiving command thread
-        self.receive_cmd_thread = threading.Thread(
-            target=self._receive_cmd_thread)
+        self.receive_cmd_thread = threading.Thread(target=self._receive_cmd_thread)
         self.receive_cmd_thread.start()
 
         # response waiting flag
@@ -100,13 +99,13 @@ class Tello:
             try:
                 response, ip = self.cmd_socket.recvfrom(1024)
                 try:
-                    print('[INFO]  Response: {}'.format(
-                        response.decode('UTF-8')))
+                    decoded_response = response.decode('UTF-8')
                 except UnicodeDecodeError:
-                    print('[INFO]  Response: {}'.format(
-                        response.decode('latin-1')))
+                    decoded_response = response.decode('latin-1')
 
-                if response == 'Error':
+                print('[INFO]  Response: {}'.format(decoded_response))
+
+                if response.lower() == 'error':
                     # command not executed
                     self.command_success = False
                     self.handler.reset()
@@ -151,3 +150,10 @@ class Tello:
             self.send_command('land')
         else:
             print('[ERROR] Initialization failed.')
+
+    def can_fly(self):
+        # read battery level
+        self.send_command('battery?')
+        enough_battery = True
+        # TODO: check if it is over 50, to takeoff
+        return enough_battery

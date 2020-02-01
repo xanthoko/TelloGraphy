@@ -19,7 +19,6 @@ class Handler:
         battery: The battery level of tello
         status: The status of tello
     """
-
     def __init__(self):
         self.starting_time = datetime.now().strftime('%A %d. %B, %H:%M')
         self.start_stamp = time()
@@ -52,11 +51,10 @@ class Handler:
                                  sTime=self.command_sent[1],
                                  rTime=rsp_time)
             self.command_tuples.append(cmd_tuple)
+            return True
         except IndexError:
             # IndexError: command_sent is an empty tuple
             return False
-
-        return True
 
     def get_pathing_commands(self):
         """Forms a list of the grouped pathing commands.
@@ -142,8 +140,7 @@ class Handler:
         with open(txt_name, 'w') as f:
             f.write(self.starting_time + '\n')
             for cmd in self.command_tuples:
-                f.write('\n{cmd.command}\t {cmd.sTime} {cmd.rTime}'.format(
-                    cmd=cmd))
+                f.write('\n{cmd.command}\t {cmd.sTime} {cmd.rTime}'.format(cmd=cmd))
 
     def cacl_go_cmd(self, steps):
         """Converts movement commands to go commands.
@@ -153,6 +150,7 @@ class Handler:
         Returns:
             list: The go commands
         """
+        # TODO: calculate the go commands from the cumulatively path commands
         go_cmds = []
 
         for step in steps:
